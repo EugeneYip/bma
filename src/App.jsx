@@ -1,54 +1,465 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Benevolent Mobile Apps — Class Guide</title>
-<style>
-:root{--bg:#FAF6F0;--bg2:#F3EEE6;--card:#fff;--border:#E0DBD2;--bh:#C8C2B6;--tx:#2A2215;--tm:#48402E;--tmu:#6A6050;--td:#918878;--navy:#1B3A5C;--red:#A31F34;--gold:#C49512;--green:#2B7A4E;--purple:#5B3E8A;--wbg:#FFF8ED;--wbd:#E8D5A8;--wtx:#7A6520;--ibg:#EEF4FB;--ibd:#C2D4E8;--itx:#1A4878;--gbg:#EFF8F2;--gbd:#B6DCC4;--gtx:#1D5E3E;--dbg:#FDF0F0;--dbd:#EABCBC}
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,'Noto Sans TC','PingFang TC',sans-serif;background:var(--bg);color:var(--tx);line-height:1.76;padding:20px 24px 48px}.wrap{max-width:860px;margin:0 auto}
-.lb{position:sticky;top:0;z-index:50;background:rgba(250,246,240,0.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border);margin:-20px -24px 20px;padding:6px 24px;display:flex;justify-content:flex-end;gap:4px}.lang-btn{border:1px solid var(--border);background:var(--card);color:var(--tmu);font-size:11px;font-weight:600;padding:4px 12px;border-radius:6px;cursor:pointer;transition:all .15s}.lang-btn:hover{border-color:var(--bh)}.lang-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
-body.l-en .zh{display:none}body.l-zh .en{display:none}
-.hero{background:linear-gradient(135deg,var(--navy) 0%,#2C5882 45%,var(--red) 100%);border-radius:16px;padding:38px 32px 30px;margin-bottom:28px;color:#fff;position:relative;overflow:hidden}.hero::after{content:'';position:absolute;top:-30%;right:-10%;width:280px;height:280px;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 60%);pointer-events:none}.hero h1{font-size:23px;font-weight:800;line-height:1.35;margin-bottom:5px}.hero .sub{font-size:13px;color:rgba(255,255,255,.72);margin-bottom:4px}.hero .sub2{font-size:11px;color:rgba(255,255,255,.55)}
-.toc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 24px;margin-bottom:28px;columns:2;column-gap:24px}.toc-t{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--td);margin-bottom:10px;column-span:all}.ti{font-size:12px;color:var(--tmu);padding:3px 0;break-inside:avoid;display:flex;align-items:center;gap:8px}.tl{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:5px;font-size:10px;font-weight:800;color:#fff;flex-shrink:0}
-.alert{background:#FFF8F0;border:1px solid #E8D5BE;border-left:4px solid var(--red);border-radius:10px;padding:18px 22px;margin-bottom:28px;font-size:13px;line-height:1.72}.at{color:var(--red);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}.lr{display:flex;align-items:center;gap:8px;margin-top:5px}
-.t{display:inline-block;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.3px;vertical-align:middle}.t-g{background:#E6F4EA;color:var(--green)}.t-a{background:#FFF3D4;color:var(--wtx)}.t-p{background:#EEE6F6;color:var(--purple)}.t-r{background:#FCE8E8;color:var(--red)}
-.sec{margin-bottom:36px}.sh{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid var(--border)}.si{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;color:#fff}.sh h2{font-size:16px;font-weight:700}.sl{font-size:9.5px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--td)}
-.cd{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px;transition:border-color .15s,box-shadow .15s;overflow-wrap:break-word}.cd:hover{border-color:var(--bh);box-shadow:0 2px 10px rgba(0,0,0,.035)}.cd h3{font-size:13.5px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}.cd p,.cd li{font-size:13px;color:var(--tm);line-height:1.76}.cd strong{color:var(--tx);font-weight:600}
-.sb{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px;position:relative;overflow-wrap:break-word}.sb-l{border-left:4px solid var(--navy)}.sb-lz{border-left:4px solid var(--green)}.sb-badge{position:absolute;top:-9px;left:16px;background:var(--bg);padding:0 8px;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;border-radius:3px}.sb-en{color:var(--navy)}.sb-zh{color:var(--green)}.sb p{font-size:13px;line-height:1.85;color:var(--tm)}
-.co{border-radius:10px;padding:14px 18px;margin:14px 0;font-size:12px;line-height:1.72;overflow-wrap:break-word}.co-w{background:var(--wbg);border:1px solid var(--wbd);color:var(--wtx)}.co-i{background:var(--ibg);border:1px solid var(--ibd);color:var(--itx)}.co-g{background:var(--gbg);border:1px solid var(--gbd);color:var(--gtx)}.dv{height:1px;background:var(--border);margin:32px 0}
-.duo{display:flex;gap:12px;margin-top:10px;flex-wrap:wrap}.duo>div{flex:1;min-width:200px;border-radius:10px;padding:14px;overflow-wrap:break-word}.duo-r{background:var(--dbg);border:1px solid var(--dbd)}.duo-g{background:var(--gbg);border:1px solid var(--gbd)}.duo-lbl{font-size:10.5px;font-weight:700;margin-bottom:5px;letter-spacing:.5px}
-.factors{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}.fc{flex:1;min-width:160px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 12px;text-align:center;transition:transform .15s,box-shadow .15s}.fc:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.05)}.fc .fi{font-size:24px;margin-bottom:6px}.fc h4{font-size:12.5px;font-weight:700;margin-bottom:4px}.fc p{font-size:10.5px;color:var(--tmu);line-height:1.55}
-.flow{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 18px;margin:18px 0;text-align:center}.flow-t{font-size:10.5px;font-weight:700;color:var(--td);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}.fr{display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;margin-bottom:8px}.fn{padding:8px 14px;border-radius:8px;font-size:11px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:1px}.fn small{font-size:9px;font-weight:400;opacity:.65}.fn1{background:#EEE6F6;color:var(--purple);border:1px solid #D6C8EE}.fn2{background:#DEE9F4;color:var(--navy);border:1px solid #B0C6DC}.fn3{background:#E6F4EA;color:var(--green);border:1px solid #AED8BC}.fn4{background:#FFF4DC;color:#7A5C0C;border:1px solid #E6D4A0}.fa{color:var(--td);font-size:16px}.flow-n{font-size:10px;color:var(--td);margin-top:12px;font-style:italic;line-height:1.55}
-.spectrum{display:flex;border-radius:10px;overflow:hidden;margin:14px 0;font-size:10.5px;font-weight:600;text-align:center;border:1px solid var(--border)}.spectrum>div{padding:14px 6px;flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}.s1{background:#8B2020;color:#FFD0D0}.s2{background:#8B6B14;color:#FFF0C0}.s3{background:#3B6B20;color:#D8F0C0}.s4{background:var(--navy);color:#C0D8F0}.s5{background:var(--green);color:#C0F0D8}.sd{font-size:8.5px;opacity:.65;letter-spacing:.5px}.sx{font-size:9.5px;opacity:.85;line-height:1.45;font-weight:500}
-.dt{width:100%;border-collapse:separate;border-spacing:0;font-size:12px;margin:12px 0;border-radius:8px;overflow:hidden;border:1px solid var(--border)}.dt th{background:var(--bg2);color:var(--navy);font-weight:600;padding:9px 12px;text-align:left;font-size:11px}.dt td{padding:9px 12px;border-top:1px solid var(--border);color:var(--tm);overflow-wrap:break-word}.dt tr:nth-child(even) td{background:rgba(0,0,0,.012)}.hl{color:var(--green);font-weight:700}.hl-a{color:var(--wtx);font-weight:700}
-.ng{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}.nc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 8px;text-align:center;transition:transform .15s,box-shadow .15s}.nc:hover{transform:translateY(-2px);box-shadow:0 3px 10px rgba(0,0,0,.04)}.nc .nv{font-size:22px;font-weight:800;line-height:1.2}.nc .nl{font-size:9.5px;color:var(--tmu);margin-top:4px;line-height:1.3}
-.stp{display:flex;gap:14px;margin-bottom:16px}.stp-n{width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;flex-shrink:0;margin-top:1px}.stp-c h4{font-size:13px;font-weight:700;margin-bottom:3px}.stp-c p{font-size:12px;color:var(--tmu);line-height:1.7;overflow-wrap:break-word}
-.cmt{background:var(--card);border-left:3px solid var(--purple);border-radius:0 10px 10px 0;padding:13px 16px;margin-bottom:10px;transition:border-color .15s}.cmt:hover{border-left-color:var(--navy)}.cmt-lbl{font-size:10px;font-weight:700;color:var(--purple);letter-spacing:.4px;margin-bottom:3px}.cmt p{font-size:12.5px;color:var(--tm);line-height:1.7;overflow-wrap:break-word}
-.qa{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:12px;display:flex;gap:12px;transition:border-color .15s;overflow-wrap:break-word}.qa:hover{border-color:var(--bh)}.qa-b{width:24px;height:24px;border-radius:6px;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px}.qa-body{flex:1;min-width:0}.qa-q{font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:5px}.qa-a{font-size:12.5px;color:var(--tm);line-height:1.7}
-.tb-row{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:1px solid var(--border);overflow-wrap:break-word}.tb-row:last-child{border-bottom:none}.tb-ch{background:#EEE6F6;color:var(--purple);font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap;margin-top:2px}.tb-s{font-size:9px;font-weight:600;border-radius:3px;padding:1px 6px;margin-left:5px}.tb-ok{background:#E6F4EA;color:var(--green)}.tb-ex{background:#FFF3D4;color:var(--wtx)}
-.cheat{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:24px}.cg{display:grid;grid-template-columns:1fr 1fr;gap:3px 20px}.cr{display:flex;gap:8px;padding:4px 0;font-size:12px;line-height:1.5}.ck{color:var(--navy);font-weight:700;min-width:110px;flex-shrink:0}.cv{color:var(--tm)}
-@media(max-width:640px){body{padding:12px 14px 40px}.hero{padding:26px 20px 22px}.hero h1{font-size:19px}.ng{grid-template-columns:1fr 1fr}.factors{flex-direction:column}.spectrum{flex-direction:column}.spectrum>div{padding:10px 14px;flex-direction:row;gap:10px;text-align:left}.duo{flex-direction:column}.toc{columns:1}.cg{grid-template-columns:1fr}.cr{flex-direction:column;gap:1px}.ck{min-width:auto}.fr{flex-direction:column;gap:3px}.fa{transform:rotate(90deg)}.qa{flex-direction:column;gap:6px}.lb{margin:-20px -14px 16px;padding:6px 14px}}
-@media print{.lb{display:none}body{background:#fff}.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
-</style>
-</head>
-<body class="l-both">
-<div class="wrap">
-<div class="lb"><button class="lang-btn active" onclick="setLang('both')">EN/中</button><button class="lang-btn" onclick="setLang('en')">EN</button><button class="lang-btn" onclick="setLang('zh')">中</button></div>
-<div class="hero"><h1>"The Case for 'Benevolent' Mobile Apps"</h1><div class="sub">Urban &amp; Sultan — MIT Sloan Management Review, Winter 2015, Vol. 56, No. 2</div><div class="sub2">MKTG 6200 — Professor Fareena Sultan (Co-Author)</div></div>
-<div class="toc"><div class="toc-t"><span class="en">Guide Structure</span><span class="zh">文件結構</span></div><div class="ti"><span class="tl" style="background:var(--navy)">A</span><span class="en">Opening Scripts</span><span class="zh">開場腳本</span></div><div class="ti"><span class="tl" style="background:var(--green)">B</span><span class="en">Core Argument</span><span class="zh">核心論點</span></div><div class="ti"><span class="tl" style="background:var(--purple)">C</span><span class="en">Logic Flow</span><span class="zh">邏輯流程圖</span></div><div class="ti"><span class="tl" style="background:var(--gold)">D</span><span class="en">Benevolence Spectrum</span><span class="zh">善意光譜</span></div><div class="ti"><span class="tl" style="background:var(--navy)">E</span><span class="en">Empirical Studies</span><span class="zh">實證研究</span></div><div class="ti"><span class="tl" style="background:var(--gold)">F</span><span class="en">Five Steps</span><span class="zh">五大步驟</span></div><div class="ti"><span class="tl" style="background:var(--purple)">G</span><span class="en">Comments</span><span class="zh">短評論</span></div><div class="ti"><span class="tl" style="background:var(--red)">H</span><span class="en">Cold-Call Q&amp;A</span><span class="zh">問答準備</span></div><div class="ti"><span class="tl" style="background:var(--purple)">I</span><span class="en">K&amp;K Connections</span><span class="zh">教科書連結</span></div><div class="ti"><span class="tl" style="background:var(--green)">J</span><span class="en">Cheat Sheet</span><span class="zh">速記表</span></div></div>
-<div class="alert"><div class="at"><span class="en">Course Context</span><span class="zh">課堂脈絡</span></div><span class="en"><strong>Professor Sultan is a co-author.</strong> She knows every detail. Expect precise mastery of concepts, mechanisms, evidence, and managerial implications.</span><span class="zh"><strong>Sultan 教授是本文共同作者。</strong>她對每個細節都有第一手了解。期待你準確掌握概念、機制、證據與管理意涵。</span><div class="lr"><span class="t t-g">ARTICLE</span><span class="en">What the article explicitly states</span><span class="zh">文章明確寫了什麼</span></div><div class="lr"><span class="t t-a">INFERENCE</span><span class="en">Reasonable managerial implication</span><span class="zh">由文章合理推出的管理意涵</span></div><div class="lr"><span class="t t-p">EXTENSION</span><span class="en">Textbook link — <em>"The article shows X. From K&amp;K, I'd connect to Y."</em></span><span class="zh">教科書延伸 — 用句型：<em>"The article shows X. From K&amp;K, I'd connect to Y."</em></span></div></div>
-<div class="sec"><div class="sh"><div class="si" style="background:var(--navy)">A</div><div><div class="sl">Section A</div><h2><span class="en">Opening Scripts</span><span class="zh">開場腳本</span></h2></div></div><div class="sb sb-l"><div class="sb-badge sb-en">ENGLISH · 30–45 sec</div><p>This article argues that mobile apps should not be viewed only as direct selling tools. Urban and Sultan propose that firms can build trust through "benevolent" apps — apps that help consumers solve problems or make decisions without focusing narrowly on an immediate sale. The key mechanism is trust: the authors say trust is built on competence, confidence, and benevolence, and that mobile apps are especially effective at signaling benevolence. They support this with two studies — Liberty Mutual in the U.S. and Suruga Bank in Japan — both showing that benevolent apps can improve trust, consideration, and preference. The main takeaway is that a mobile app should be part of a broader brand and trust strategy, not just a digital promotion tool.</p></div><div class="sb sb-lz"><div class="sb-badge sb-zh">中文 · 30–45 秒</div><p>這篇文章主張 mobile apps 不應只被視為 direct selling tools。Urban 與 Sultan 提出企業可透過「benevolent apps」建立 trust——先幫消費者解決問題或做決策，而不是只盯著 immediate sale。核心機制是 trust，由 competence、confidence、benevolence 構成，mobile apps 特別適合傳達 benevolence。作者用美國 Liberty Mutual 與日本 Suruga Bank 兩個 studies 支持論點。最大 takeaway：mobile app 應是 brand strategy 和 trust strategy 的一部分，而不只是 digital promotion。</p></div><div class="sb sb-l" style="margin-top:16px"><div class="sb-badge sb-en">ENGLISH · 60–90 sec</div><p>What I found most important is that the article reframes mobile marketing from a transaction lens to a trust lens. The authors contrast push apps — designed to generate sales and promote deals — with benevolent apps, which help consumers in ways not directly tied to an immediate sale. Their argument is not that firms should stop selling. It is that if an app clearly advances the customer's interests, it strengthens the benevolence component of trust, which then improves consideration, preference, and willingness to buy.</p><p style="margin-top:8px">The strongest example is Liberty Mutual. The company does not sell moving insurance, yet it developed an app to help people who were moving — a digital safe for recording valuables and a box inventory tool. The app still had a brand capture mechanism on the final screen linking users to agents, so it was not anti-commercial — it was customer value first, with a credible bridge back to the brand.</p><p style="margin-top:8px">The article supports this with two studies using pre/post measurement and control conditions. In these forced-exposure settings, the benevolent apps produced stronger incremental effects than specific control media. But the authors do not claim apps replace other media — they say apps should be part of an optimized media mix. I would also note that the evidence mainly captures attitudes, consideration, preference, and purchase intent rather than long-run realized sales, so I see this as strong support for strategic value, not final proof.</p></div></div><div class="dv"></div>
-<div class="sec"><div class="sh"><div class="si" style="background:var(--green)">B</div><div><div class="sl">Section B</div><h2><span class="en">Core Argument</span><span class="zh">核心論點</span></h2></div></div><div class="cd"><h3><span class="t t-g">ARTICLE</span><span class="en">What is a Benevolent App?</span><span class="zh">什麼是善意型 App？</span></h3><p class="en">Apps whose value is <strong>not directly tied to selling products</strong>, but to <strong>advancing consumers' interests</strong> and advocating for their needs <strong>ahead of the company's short-term profit</strong>.</p><p class="zh">善意型 App 的價值<strong>不直接綁在 selling 上</strong>，而是<strong>推進消費者利益</strong>、把顧客需求放在<strong>公司短期獲利前面</strong>。</p></div><div class="cd"><h3><span class="t t-g">ARTICLE</span> Push Apps vs. Benevolent Apps</h3><div class="duo"><div class="duo-r"><div class="duo-lbl" style="color:var(--red)">PUSH APPS</div><p style="font-size:12px">Staples, Domino's, Zappos<br><span class="en">Goal: generate sales, promote deals<br>Starting point: company's selling objective</span><span class="zh">目標：促進銷售、推送優惠<br>出發點：公司的銷售目標</span><br><span style="color:var(--wtx);font-size:10.5px;font-weight:600">→ Selling orientation</span></p></div><div class="duo-g"><div class="duo-lbl" style="color:var(--green)">BENEVOLENT APPS</div><p style="font-size:12px">Sea Tow, North Face, Columbia<br><span class="en">Goal: help customers, build trust<br>Starting point: customer's need/difficulty</span><span class="zh">目標：幫助顧客、建立信任<br>出發點：顧客的需求/困難</span><br><span style="color:var(--wtx);font-size:10.5px;font-weight:600">→ Customer orientation</span></p></div></div></div><div class="cd"><h3><span class="t t-g">ARTICLE</span><span class="en">Core Mechanism: Trust</span><span class="zh">核心機制：信任</span></h3><p style="font-size:11.5px;margin-bottom:12px"><span class="en">Trust is built on three factors (Bart, Shankar, <strong>Sultan</strong> &amp; Urban, 2005 — <span class="t t-r">Sultan's prior research</span>):</span><span class="zh">Trust 建立在三因素上（Bart, Shankar, <strong>Sultan</strong> &amp; Urban, 2005 — <span class="t t-r">Sultan 教授的先前研究</span>）：</span></p><div class="factors"><div class="fc" style="border-top:3px solid var(--navy)"><div class="fi">🏆</div><h4 style="color:var(--navy)">Competence<span class="zh"> 能力</span></h4><p class="en">High-quality product/service</p><p class="zh">提供高品質產品/服務</p></div><div class="fc" style="border-top:3px solid var(--gold)"><div class="fi">🤝</div><h4 style="color:#7A5C0C">Confidence<span class="zh"> 信心</span></h4><p class="en">Customers believe the company</p><p class="zh">顧客相信公司會負責</p></div><div class="fc" style="border-top:3px solid var(--green)"><div class="fi">💚</div><h4 style="color:var(--green)">Benevolence<span class="zh"> 善意</span></h4><p class="en">Provider has customer's interests in mind</p><p class="zh">企業把顧客放心上</p></div></div><p style="font-size:12px;margin-top:3px"><span class="en">Key claim: <strong>mobile apps are especially effective at signaling benevolence</strong>.</span><span class="zh">關鍵主張：<strong>mobile apps 特別適合傳達 benevolence</strong>。</span></p><div class="co co-w" style="margin-top:12px"><span class="en">Trust must be sustained by <strong>quality service</strong> and <strong>transparent communication</strong>. Cannot compensate for weak products.</span><span class="zh">長期須由 <strong>quality service</strong> 與 <strong>transparent communication</strong> 持續強化。無法替弱產品擦屁股。</span></div></div><div class="cd" style="border-left:4px solid var(--gold)"><h3><span class="t t-g">ARTICLE</span> Sea Tow — Anchor Example</h3><p><strong>Sea Tow Service International</strong> (Southold, NY)</p><p style="margin-top:5px"><strong><span class="en">Free App:</span><span class="zh">免費 App：</span></strong> tide tables · marine weather · GPS · speed</p><p style="margin-top:5px"><span class="en"><strong>Counterintuitive:</strong> Safety info reduces accidents = less demand? Article: consumers sense benevolence → more trust → choose Sea Tow in emergencies.</span><span class="zh"><strong>反直覺：</strong>安全資訊降低事故＝削弱需求？文章反論：消費者感受善意 → 更信任 → emergency 時選 Sea Tow。</span></p><p style="margin-top:5px"><span class="en">App retains <strong>emergency help slider</strong> → customer welfare first. <strong>Not anti-commercial.</strong></span><span class="zh">App 保留 <strong>emergency help slider</strong> → 先 customer welfare。<strong>不是反商業。</strong></span></p></div></div><div class="dv"></div>
-<div class="sec"><div class="sh"><div class="si" style="background:var(--purple)">C</div><div><div class="sl">Section C</div><h2><span class="en">Logic Flow</span><span class="zh">邏輯流程圖</span></h2></div></div><div class="flow"><div class="flow-t">Causal Path</div><div class="fr"><div class="fn fn1">Benevolent App<small class="en">Helps, not sells</small><small class="zh">幫助，非銷售</small></div><div class="fa">→</div><div class="fn fn1"><span class="en">Signals Benevolence</span><span class="zh">傳達善意</span></div><div class="fa">→</div><div class="fn fn2">Trust ↑</div></div><div class="fr"><div class="fn fn2">Trust ↑</div><div class="fa">→</div><div class="fn fn3">Consideration ↑</div><div class="fa">→</div><div class="fn fn3">Preference ↑</div><div class="fa">→</div><div class="fn fn4">Purchase Intent ↑</div></div><div class="flow-n"><span class="en">Evidence mainly captures attitudes/intent, not long-run realized sales.</span><span class="zh">文章 evidence 主要停留在態度與意向層面，非長期已實現銷售。</span></div></div></div><div class="dv"></div>
-<div class="sec"><div class="sh"><div class="si" style="background:var(--gold)">D</div><div><div class="sl">Section D</div><h2><span class="en">Benevolence Spectrum</span><span class="zh">善意光譜</span></h2></div></div><div class="spectrum"><div class="s1"><div class="sd">← SELL</div><strong>Product Push</strong><div class="sx">Staples · Domino's · Zappos</div></div><div class="s2"><strong>Convenience</strong><div class="sx">GasBuddy · Foursquare</div></div><div class="s3"><strong>Entertainment</strong><div class="sx">Chipotle Scarecrow</div></div><div class="s4"><strong>Product Assist</strong><div class="sx">Kraft iFood · Ikea · ColorSnap</div></div><div class="s5"><strong>Benevolent</strong><div class="sx">Sea Tow · North Face · Columbia · Car Seat Helper</div><div class="sd">HELP →</div></div></div><div class="co co-i"><span class="en">Not binary. Managers have <strong>strategic flexibility</strong>. Trust strategy → far right. Promo → evolve left to right.</span><span class="zh">非二元。Manager 有<strong>策略彈性</strong>。信任策略 → 最右。促銷 → 左往右。</span></div><div class="co co-w" style="font-size:11px"><span class="en">Nationwide discussed in text but <strong>not plotted on the spectrum figure</strong>.</span><span class="zh">Nationwide 在正文討論但<strong>未出現在光譜圖上</strong>。</span></div></div><div class="dv"></div>
-<div class="sec"><div class="sh"><div class="si" style="background:var(--navy)">E</div><div><div class="sl">Section E</div><h2><span class="en">Empirical Studies</span><span class="zh">實證研究</span></h2></div></div><div class="cd" style="border-left:4px solid var(--navy)"><h3>Study #1: Liberty Mutual — "Dubble Wrap"</h3><p><strong>Company:</strong> Liberty Mutual, Boston | <strong>Target:</strong> <span class="en">People moving</span><span class="zh">搬家中的人</span> | <strong>Features:</strong> Digital safe + Box inventory</p><div class="co co-g" style="margin-top:10px"><span class="en"><strong>Key Insight:</strong> Sells auto/homeowners/property insurance — <strong>does NOT sell moving insurance</strong>. Purest benevolence.</span><span class="zh"><strong>關鍵洞見：</strong>賣汽車/房屋/財產險——<strong>不賣搬家險</strong>卻做搬家 App。最純粹的 benevolence。</span></div><p style="margin-top:8px;font-size:12px"><span class="en"><strong>Goodwill-capture:</strong> Final screen links to agents. Items catalogued → simplifies application. <strong>Customer value first + credible bridge.</strong></span><span class="zh"><strong>善意轉化：</strong>最後一頁聯繫 agents。物品已編目 → 簡化申請。<strong>先 customer value，再 credible bridge。</strong></span></p><p style="margin-top:6px;font-size:11px;color:var(--td)"><strong>Design:</strong> 2010 · 750 iPhone · 550 app | 100 website ctrl | 100 TV ctrl · Pre/post</p><table class="dt"><tr><th>Metric</th><th>Before</th><th>After</th><th>Change</th></tr><tr><td>Consideration (1-10)</td><td>5.4</td><td>6.7</td><td class="hl">+24%</td></tr><tr><td>Purchase likelihood (1-5)</td><td>2.9</td><td>3.3</td><td class="hl">+14%</td></tr><tr><td>Combined sales potential</td><td colspan="2" style="text-align:center">1.24 × 1.14</td><td class="hl">= 1.41 → +41%</td></tr><tr><td>Preference (100-pt)</td><td>9.2%</td><td>17%</td><td class="hl">≈ 2×</td></tr><tr><td>vs. TV/website</td><td colspan="3" class="hl-a">+60% consideration · +34% preference (forced-exposure)</td></tr></table><p style="font-size:10.5px;color:var(--td);margin-top:5px"><span class="en">Did not fully deploy → developed "Home Gallery." State Farm launched MoveTools.</span><span class="zh">未完全部署 → 開發 "Home Gallery"。State Farm 推出 MoveTools。</span></p></div><div class="cd" style="border-left:4px solid var(--green)"><h3>Study #2: Suruga Bank — <span class="en">Housing/Financial App</span><span class="zh">住宅/財務 App</span></h3><p><strong>Company:</strong> Suruga Bank, Shizuoka, Japan | <strong>Features:</strong> <span class="en">Home selection + budget advisor + loan info</span><span class="zh">找房 + 預算顧問 + 貸款資訊</span></p><div class="co co-w" style="margin-top:6px;font-size:11px"><span class="en"><strong>App name varies:</strong> "Dream Mover" / "Dream Move." Safest: <strong>"Suruga Bank's housing and financial-planning app."</strong></span><span class="zh"><strong>App 名稱不一：</strong>正文 "Dream Mover"，研究框 "Dream Move"。最穩：<strong>「Suruga Bank 的住宅與財務規劃 app」</strong></span></div><p style="margin-top:6px;font-size:11px;color:var(--td)"><strong>Design:</strong> 2013 · 1,500 · 500 app | 500 article ctrl | 500 ad ctrl · Pre/post</p><table class="dt"><tr><th>Metric</th><th>Result</th></tr><tr><td><span class="en">Trust attributes</span><span class="zh">信任屬性</span></td><td class="hl">All sig. improved (p &lt; .01)</td></tr><tr><td><span class="en">Tech-advanced</span><span class="zh">科技先進</span></td><td class="hl">Sig. improved</td></tr><tr><td>Consideration</td><td class="hl">4.34 → 14.16 = 2.26×</td></tr><tr><td>Preference (100-pt)</td><td class="hl">0.99 → 3.04 = 3×</td></tr><tr><td>vs. print ad</td><td class="hl-a">&gt;2× effective (forced-exposure)</td></tr></table><p style="font-size:10.5px;color:var(--td);margin-top:5px"><span class="en"><strong>Cross-cultural:</strong> U.S. + Japan both positive → diverse cultural contexts → global brands.</span><span class="zh"><strong>跨文化：</strong>美日均有效 → 適用多元文化 → 全球品牌。</span></p></div><div style="font-size:13px;font-weight:700;margin:18px 0 8px"><span class="en">Key Numbers</span><span class="zh">關鍵數字</span></div><div class="ng"><div class="nc"><div class="nv" style="color:var(--navy)">+24%</div><div class="nl">LM Consider.<br>5.4→6.7</div></div><div class="nc"><div class="nv" style="color:var(--green)">+41%</div><div class="nl">LM Sales Pot.<br>1.24×1.14</div></div><div class="nc"><div class="nv" style="color:var(--gold)">2.26×</div><div class="nl">Suruga Cons.<br>4.34→14.16</div></div><div class="nc"><div class="nv" style="color:var(--purple)">3×</div><div class="nl">Suruga Pref.<br>0.99→3.04</div></div></div></div><div class="dv"></div>
-<div class="sec"><div class="sh"><div class="si" style="background:var(--gold)">F</div><div><div class="sl">Section F</div><h2><span class="en">Five Managerial Steps</span><span class="zh">五大管理步驟</span></h2></div></div><div class="co co-i" style="margin-bottom:16px"><span class="en">Sultan emphasizes <strong>action orientation</strong>. These are the article's direct prescriptions.</span><span class="zh">Sultan 教授重視 <strong>action orientation</strong>。以下是文章直接的管理指引。</span></div><div class="stp"><div class="stp-n">1</div><div class="stp-c"><h4><span class="en">Decide Benevolence Level</span><span class="zh">決定善意程度</span></h4><p><span class="en">What info do customers need? What service? How to simplify? Be unique, useful, tech-backed. <strong>Clear brand link</strong>. Trust → far right. Promo → left to right.</span><span class="zh">顧客需要什麼資訊？什麼服務？如何簡化？獨特、有用、有技術。<strong>明確品牌連結</strong>。信任 → 右端。促銷 → 左往右。</span></p></div></div><div class="stp"><div class="stp-n">2</div><div class="stp-c"><h4><span class="en">Design Like a New Product</span><span class="zh">像新產品設計</span></h4><p><span class="en">Not an IT task. <strong>Go/no-go steps</strong>, focus groups. LM: heavy vs. light → chose simpler. Suruga: 3 focus groups.</span><span class="zh">非 IT 任務。<strong>Go/no-go 決策點</strong>、焦點座談。LM：重版 vs. 輕版 → 選簡版。Suruga：3 場座談。</span></p></div></div><div class="stp"><div class="stp-n">3</div><div class="stp-c"><h4><span class="en">Test with Users</span><span class="zh">與用戶測試</span></h4><p><span class="en"><strong>Flawless &amp; relevant</strong> — glitches undermine trust. Know how app creates value + <strong>psychological brand link</strong>. May need 2.0.</span><span class="zh"><strong>必須完美且相關</strong> — 故障損害信任。須了解 app 如何創造價值 + <strong>心理品牌連結</strong>。可能需 2.0。</span></p></div></div><div class="stp"><div class="stp-n">4</div><div class="stp-c"><h4><span class="en">Launch with Marketing Support</span><span class="zh">行銷支援上市</span></h4><p><span class="en">= launching new product. Awareness not automatic. Dedicated budget. 1M+ apps → invisible without ads.</span><span class="zh">＝推出新產品。知名度不會自動發生。需專門預算。100萬+ apps → 無廣告則不可見。</span></p></div></div><div class="stp"><div class="stp-n">5</div><div class="stp-c"><h4><span class="en">Link to Media Strategy</span><span class="zh">連結媒體策略</span></h4><p><span class="en">Part of trust-building strategy. Article: <strong>"other media also important"</strong> → optimized mix. <span style="color:var(--red);font-weight:600">Do NOT say "apps replace traditional media."</span></span><span class="zh">信任建構策略的一部分。文章：<strong>「其他媒體也很重要」</strong>→ 最佳化組合。<span style="color:var(--red);font-weight:600">不可說「apps 取代傳統媒體」。</span></span></p></div></div></div><div class="dv"></div>
-<div class="sec"><div class="sh"><div class="si" style="background:var(--purple)">G</div><div><div class="sl">Section G</div><h2><span class="en">Ready-to-Use Comments</span><span class="zh">課堂短評論</span></h2></div></div><div class="cmt"><div class="cmt-lbl">1 — Mechanism</div><p class="en">Gives a <strong>mechanism</strong>. Benevolence strengthens trust → brands must enter <strong>consideration set</strong>.</p><p class="zh">提供 <strong>mechanism</strong>。Benevolence 強化 trust → 品牌必須先進入 <strong>consideration set</strong>。</p></div><div class="cmt"><div class="cmt-lbl">2 — Still strategic</div><p class="en"><strong>Not anti-business.</strong> LM created a <strong>bridge</strong> to other products. Customer value first, not without business relevance.</p><p class="zh"><strong>不是反商業。</strong>LM 為其他保險產品建立<strong>橋樑</strong>。先 customer value，但不脫離商業意義。</p></div><div class="cmt"><div class="cmt-lbl">3 — Not all-or-nothing</div><p class="en">Managers pick the <strong>right level</strong> for brand and competitive context.</p><p class="zh">Manager 依品牌與競爭情境選<strong>適合的善意程度</strong>。</p></div><div class="cmt"><div class="cmt-lbl">4 — Honest qualification</div><p class="en">Strong evidence but mainly <strong>attitudes/intent</strong>. Strategic potential, not final proof.</p><p class="zh">Evidence 強但主要測 <strong>attitudes/intent</strong>。Strategic potential 的強支持，非最終 proof。</p></div><div class="cmt"><div class="cmt-lbl">5 — Reframing <span class="t t-p">EXTENSION</span></div><p class="en">Partly <strong>product design</strong> (utility), partly <strong>communication</strong> (trust), partly <strong>CRM</strong> (pre-sale relationship).</p><p class="zh">同時涉及<strong>產品設計</strong>（utility）、<strong>溝通</strong>（trust）、<strong>CRM</strong>（sale 前建立關係）。</p><p style="font-size:10px;color:var(--wtx);margin-top:3px"><span class="en">Your extension, not article language.</span><span class="zh">你的延伸，不是文章原話。</span></p></div></div><div class="dv"></div>
-<div class="sec"><div class="sh"><div class="si" style="background:var(--red)">H</div><div><div class="sl">Section H</div><h2>Cold-Call Q&amp;A</h2></div></div><div class="qa"><div class="qa-b">1</div><div class="qa-body"><div class="qa-q"><span class="en">What is a benevolent app?</span><span class="zh">什麼是 benevolent app？</span></div><div class="qa-a en">Value not tied to selling but to helping consumers — advancing their interests ahead of short-term profit.</div><div class="qa-a zh">價值不綁 selling，幫消費者做決策，consumer interests 優先於短期獲利。</div></div></div><div class="qa"><div class="qa-b">2</div><div class="qa-body"><div class="qa-q"><span class="en">How different from push app?</span><span class="zh">和 push app 有何不同？</span></div><div class="qa-a en">Push = sales + deals. Benevolent = help first. <strong>Selling vs. customer orientation.</strong></div><div class="qa-a zh">Push = 銷售+促銷。Benevolent = 先幫顧客。<strong>Selling orientation vs. customer orientation。</strong></div></div></div><div class="qa"><div class="qa-b">3</div><div class="qa-body"><div class="qa-q"><span class="en">Key mechanism?</span><span class="zh">核心機制？</span></div><div class="qa-a"><strong>Trust</strong> = competence + confidence + benevolence. Apps signal benevolence → trust ↑ → consider/prefer/buy ↑.</div></div></div><div class="qa"><div class="qa-b">4</div><div class="qa-body"><div class="qa-q">Evidence?</div><div class="qa-a">LM (n=750): +24% consider, +14% purchase, pref ≈2×. Suruga (n=1,500): 2.26× consider, 3× pref. <span class="en">Both forced-exposure.</span><span class="zh">均為 forced-exposure。</span></div></div></div><div class="qa"><div class="qa-b">5</div><div class="qa-body"><div class="qa-q"><span class="en">What should managers do?</span><span class="zh">Manager 該怎麼做？</span></div><div class="qa-a en">5 steps: level → NPD design → test → launch w/ budget → media strategy. <strong>Not standalone.</strong></div><div class="qa-a zh">五步：善意程度 → NPD 設計 → 測試 → 行銷預算 → 媒體策略。<strong>非孤立戰術。</strong></div></div></div><div class="qa"><div class="qa-b">6</div><div class="qa-body"><div class="qa-q"><span class="en">Limitations?</span><span class="zh">研究限制？</span> <span class="t t-a">CRITICAL THINKING</span></div><div class="qa-a en">Forced-exposure; attitudes/intent not long-run sales. "Strong indications" not proof. Must be <strong>credible</strong>.</div><div class="qa-a zh">Forced-exposure；測 attitudes/intent 非長期 sales。「Strong indications」非最終 proof。必須<strong>可信</strong>。</div></div></div><div class="qa"><div class="qa-b">7</div><div class="qa-body"><div class="qa-q"><span class="en">Why Liberty Mutual strongest?</span><span class="zh">為什麼 LM 最強？</span></div><div class="qa-a en"><strong>Doesn't sell moving insurance.</strong> Purest benevolence. Benefit = trust + downstream brand effects.</div><div class="qa-a zh"><strong>不賣搬家險。</strong>最純粹 benevolence。好處 = trust + 下游品牌效果。</div></div></div><div class="qa"><div class="qa-b">8</div><div class="qa-body"><div class="qa-q"><span class="en">Cross-cultural?</span><span class="zh">跨文化？</span></div><div class="qa-a en">U.S. + Japan both positive. <strong>Diverse cultural contexts</strong> → global brands.</div><div class="qa-a zh">美日均正面。<strong>多元文化</strong>適用 → 全球品牌。</div></div></div></div><div class="dv"></div>
-<div class="sec"><div class="sh"><div class="si" style="background:var(--purple)">I</div><div><div class="sl">Section I</div><h2>Kotler &amp; Keller</h2></div></div><div class="co co-w" style="margin-bottom:14px;font-size:11px"><span class="en"><strong>Course extension, not article language.</strong> <em>"The article shows X. From K&amp;K, I'd connect to Y."</em></span><span class="zh"><strong>課程延伸，非文章原話。</strong><em>「文章顯示 X。從 K&amp;K 角度，我會連結到 Y。」</em></span></div><div class="cd"><div class="tb-row"><span class="tb-ch">Ch.11</span><div><strong>IMC / Media Mix</strong> <span class="tb-s tb-ok">Strong</span><p style="font-size:11px;color:var(--tmu)"><span class="en">Step 5 explicitly discusses overall media spend.</span><span class="zh">Step 5 明確討論整體媒體支出。</span></p></div></div><div class="tb-row"><span class="tb-ch">Ch.10</span><div><strong>NPD Process</strong> <span class="tb-s tb-ok">Strong</span><p style="font-size:11px;color:var(--tmu)"><span class="en">Step 2: "design like new product, go/no-go."</span><span class="zh">Step 2：「像新產品設計，go/no-go」</span></p></div></div><div class="tb-row"><span class="tb-ch">Ch.5</span><div><strong>Consumer Decision Journey</strong> <span class="tb-s tb-ok">Strong</span><p style="font-size:11px;color:var(--tmu)"><span class="en">Studies measure consideration → preference → purchase intent.</span><span class="zh">研究測量 consideration → preference → purchase intent。</span></p></div></div><div class="tb-row"><span class="tb-ch">Ch.8</span><div><strong>CBBE</strong> <span class="tb-s tb-ex">Extension</span><p style="font-size:11px;color:var(--tmu)"><span class="en">Logic consistent but doesn't use Keller's terminology.</span><span class="zh">邏輯相通但未使用 Keller 術語。</span></p></div></div><div class="tb-row"><span class="tb-ch">Ch.4</span><div><strong>CRM</strong> <span class="tb-s tb-ex">Extension</span><p style="font-size:11px;color:var(--tmu)"><span class="en">Trust-building relates to loyalty.</span><span class="zh">信任建構與忠誠度相關。</span></p></div></div><div class="tb-row"><span class="tb-ch">Ch.7</span><div><strong>Positioning</strong> <span class="tb-s tb-ex">Extension</span><p style="font-size:11px;color:var(--tmu)"><span class="en">Benevolent app as differentiation.</span><span class="zh">善意 App 作為差異化策略。</span></p></div></div></div></div><div class="dv"></div>
-<div class="sec"><div class="sh"><div class="si" style="background:var(--green)">J</div><div><div class="sl">Section J</div><h2><span class="en">Final Cheat Sheet</span><span class="zh">最終速記</span></h2></div></div><div class="cheat"><div class="cg"><div class="cr"><span class="ck">Core Idea</span><span class="cv">Apps build <strong>trust</strong>, not just sales</span></div><div class="cr"><span class="ck">Trust</span><span class="cv"><strong>Competence + Confidence + Benevolence</strong></span></div><div class="cr"><span class="ck">Benevolent App</span><span class="cv"><span class="en">Helps first; sells later if at all</span><span class="zh">先幫助；之後才談銷售</span></span></div><div class="cr"><span class="ck">Spectrum</span><span class="cv">Push → Conv → Ent → Assist → Benevolent</span></div><div class="cr"><span class="ck"><span class="en">Best Example</span><span class="zh">最佳案例</span></span><span class="cv"><strong>Liberty Mutual</strong></span></div><div class="cr"><span class="ck">Anchor</span><span class="cv"><strong>Sea Tow</strong></span></div><div class="cr"><span class="ck">Evidence</span><span class="cv">LM (U.S. 750) + Suruga (JP 1500)</span></div><div class="cr"><span class="ck">LM</span><span class="cv">+24% consider · +14% buy · +41% combined · pref ≈2×</span></div><div class="cr"><span class="ck">Suruga</span><span class="cv">Consider 2.26× · Pref 3×</span></div><div class="cr"><span class="ck"><span class="en">Cross-Cultural</span><span class="zh">跨文化</span></span><span class="cv">U.S. + Japan → global</span></div><div class="cr"><span class="ck">5 Steps</span><span class="cv">Level → NPD → Test → Launch → Media</span></div><div class="cr"><span class="ck">Media</span><span class="cv"><span class="en">NOT "replace" → optimized mix</span><span class="zh">非「取代」→ 最佳化組合</span></span></div><div class="cr"><span class="ck">Critique</span><span class="cv"><span class="en">Attitudes/intent, not sales. "Strong indications."</span><span class="zh">測態度/意向非銷售。「Strong indications」</span></span></div><div class="cr"><span class="ck">Caveat</span><span class="cv"><span class="en">Must be credible. Can't fix weak products.</span><span class="zh">必須可信。無法修補弱產品。</span></span></div></div></div></div>
-</div>
-<script>function setLang(m){document.body.className=m==='en'?'l-en':m==='zh'?'l-zh':'l-both';document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.textContent.trim()===(m==='en'?'EN':m==='zh'?'中':'EN/中'))})}</script>
-</body>
-</html>
+import { useState } from "react";
+
+const T = ({ en, zh, lang }) => {
+  if (lang === "en") return en;
+  if (lang === "zh") return zh;
+  return <>{en}<span style={{ color: "#8A7E6E", fontSize: "0.92em", marginLeft: 6 }}>{zh}</span></>;
+};
+
+const colors = {
+  navy: "#1B3A5C",
+  red: "#A31F34",
+  gold: "#B8880E",
+  green: "#267348",
+  purple: "#53378A",
+};
+
+const Tag = ({ type, children }) => {
+  const styles = {
+    g: { background: "#E4F2E8", color: colors.green },
+    a: { background: "#FFF4D4", color: "#6E5A18" },
+    p: { background: "#ECE4F6", color: colors.purple },
+    r: { background: "#FCE6E6", color: colors.red },
+  };
+  return (
+    <span style={{ ...styles[type], display: "inline-block", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 4, letterSpacing: 0.3, verticalAlign: "middle" }}>
+      {children}
+    </span>
+  );
+};
+
+const Badge = ({ color, children }) => (
+  <span style={{ background: color, color: "#fff", fontSize: 9, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", padding: "2px 8px", borderRadius: 3, marginLeft: 6, verticalAlign: "middle" }}>
+    {children}
+  </span>
+);
+
+const Card = ({ children, style }) => (
+  <div style={{ background: "#fff", border: "1px solid #DDD8CE", borderRadius: 14, padding: "24px 26px", marginBottom: 16, overflowWrap: "break-word", ...style }}>
+    {children}
+  </div>
+);
+
+const Callout = ({ type, children }) => {
+  const s = {
+    w: { background: "#FFFAEF", border: "1px solid #E6D2A0", color: "#6E5A18" },
+    i: { background: "#EDF3FA", border: "1px solid #BED0E6", color: "#164272" },
+    g: { background: "#EDF7F0", border: "1px solid #ACD8BC", color: "#185838" },
+  };
+  return <div style={{ ...s[type], borderRadius: 11, padding: "15px 20px", margin: "14px 0", fontSize: 13, lineHeight: 1.76 }}>{children}</div>;
+};
+
+const SectionHead = ({ letter, bg, title }) => (
+  <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 22, paddingBottom: 12, borderBottom: "2px solid #DDD8CE" }}>
+    <div style={{ width: 38, height: 38, borderRadius: 9, background: bg, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, fontWeight: 800, flexShrink: 0 }}>{letter}</div>
+    <div>{title}</div>
+  </div>
+);
+
+const ScriptBox = ({ label, color, children }) => (
+  <div style={{ background: "#fff", border: "1px solid #DDD8CE", borderLeft: `5px solid ${color}`, borderRadius: 14, padding: "24px 26px", marginBottom: 16, position: "relative" }}>
+    <div style={{ position: "absolute", top: -10, left: 18, background: "#F9F5EE", padding: "1px 10px", fontSize: 10, fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase", borderRadius: 4, border: "1px solid #DDD8CE", color }}>{label}</div>
+    <div style={{ fontSize: 14, lineHeight: 1.9, color: "#3E3828" }}>{children}</div>
+  </div>
+);
+
+const Step = ({ n, title, children }) => (
+  <div style={{ display: "flex", gap: 18, marginBottom: 20, alignItems: "flex-start" }}>
+    <div style={{ width: 34, height: 34, borderRadius: "50%", background: colors.navy, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 800, flexShrink: 0 }}>{n}</div>
+    <div><div style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>{title}</div><div style={{ fontSize: 13, color: "#625A4A", lineHeight: 1.76 }}>{children}</div></div>
+  </div>
+);
+
+const Comment = ({ label, children, note }) => (
+  <div style={{ background: "#fff", borderLeft: `4px solid ${colors.purple}`, borderRadius: "0 12px 12px 0", padding: "15px 20px", marginBottom: 12 }}>
+    <div style={{ fontSize: 11, fontWeight: 700, color: colors.purple, letterSpacing: 0.5, marginBottom: 4 }}>{label}</div>
+    <div style={{ fontSize: 13.5, color: "#3E3828", lineHeight: 1.76 }}>{children}</div>
+    {note && <div style={{ fontSize: 12, color: "#6E5A18", marginTop: 5, paddingTop: 5, borderTop: "1px dashed #DDD8CE" }}>{note}</div>}
+  </div>
+);
+
+const QA = ({ n, q, a, lang }) => (
+  <div style={{ background: n % 2 === 0 ? "#FEFCF8" : "#fff", border: "1px solid #DDD8CE", borderRadius: 12, padding: "16px 20px", marginBottom: 14, display: "flex", gap: 14 }}>
+    <div style={{ width: 28, height: 28, borderRadius: 7, background: colors.gold, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, flexShrink: 0 }}>{n}</div>
+    <div style={{ flex: 1, minWidth: 0 }}>
+      <div style={{ fontSize: 14, fontWeight: 700, color: colors.navy, marginBottom: 6 }}>{q}</div>
+      <div style={{ fontSize: 13.5, color: "#3E3828", lineHeight: 1.76 }}>{a}</div>
+    </div>
+  </div>
+);
+
+const TBRow = ({ ch, name, strength, desc, isLast }) => (
+  <div style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "13px 0", borderBottom: isLast ? "none" : "1px solid #DDD8CE" }}>
+    <span style={{ background: "#ECE4F6", color: colors.purple, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 5, whiteSpace: "nowrap" }}>{ch}</span>
+    <div>
+      <strong>{name}</strong>
+      <span style={{ fontSize: 9.5, fontWeight: 700, borderRadius: 3, padding: "2px 7px", marginLeft: 6, background: strength === "Strong" ? "#E4F2E8" : "#FFF4D4", color: strength === "Strong" ? colors.green : "#6E5A18" }}>{strength}</span>
+      <p style={{ fontSize: 12, color: "#625A4A", marginTop: 2 }}>{desc}</p>
+    </div>
+  </div>
+);
+
+const Dv = () => <div style={{ height: 2, background: "linear-gradient(90deg, transparent, #DDD8CE, transparent)", margin: "40px 0" }} />;
+
+export default function App() {
+  const [lang, setLang] = useState("both");
+
+  const t = (en, zh) => <T en={en} zh={zh} lang={lang} />;
+  const te = (en, zh) => lang === "zh" ? zh : lang === "en" ? en : `${en} ${zh}`;
+
+  const spectrumData = [
+    { label: "Product Push", zh: "產品推銷", ex: "Staples · Domino's · Zappos", bg: "#E8B4B4", color: "#6B1818", dir: "← SELL" },
+    { label: "Convenience", zh: "便利性", ex: "GasBuddy · Foursquare", bg: "#EDDCAA", color: "#6B4D0A" },
+    { label: "Entertainment", zh: "娛樂", ex: "Chipotle Scarecrow", bg: "#C8E0B4", color: "#2E5414" },
+    { label: "Product Assist", zh: "產品輔助", ex: "Kraft iFood · Ikea · ColorSnap", bg: "#B4CCE4", color: "#163A5C" },
+    { label: "Benevolent", zh: "善意服務", ex: "Sea Tow · North Face · Columbia · Car Seat Helper", bg: "#B4E0C8", color: "#164A2E", dir2: "HELP →" },
+  ];
+
+  return (
+    <div style={{ background: "#F9F5EE", minHeight: "100vh", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, 'Noto Sans TC', sans-serif", color: "#261F10", lineHeight: 1.82, fontSize: 14 }}>
+      {/* Lang Toggle */}
+      <div style={{ position: "sticky", top: 0, zIndex: 200, background: "rgba(249,245,238,0.92)", backdropFilter: "blur(12px)", borderBottom: "1px solid #DDD8CE", padding: "8px 24px", display: "flex", justifyContent: "flex-end" }}>
+        <div style={{ display: "flex", background: "#fff", border: "1px solid #DDD8CE", borderRadius: 8, overflow: "hidden", boxShadow: "0 2px 10px rgba(0,0,0,0.07)" }}>
+          {[["both", "EN/中"], ["en", "EN"], ["zh", "中"]].map(([k, label]) => (
+            <button key={k} onClick={() => setLang(k)} style={{ padding: "7px 15px", fontSize: 12, fontWeight: 700, cursor: "pointer", border: "none", borderRight: k !== "zh" ? "1px solid #DDD8CE" : "none", background: lang === k ? colors.navy : "transparent", color: lang === k ? "#fff" : "#625A4A", transition: "all 0.15s" }}>{label}</button>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ maxWidth: 840, margin: "0 auto", padding: "20px 24px 48px" }}>
+        {/* Hero */}
+        <div style={{ background: `linear-gradient(135deg, ${colors.navy} 0%, #2E5B88 50%, ${colors.red} 100%)`, borderRadius: 18, padding: "44px 38px 34px", marginBottom: 32, color: "#fff", position: "relative", overflow: "hidden" }}>
+          <h1 style={{ fontSize: 25, fontWeight: 800, lineHeight: 1.38, marginBottom: 7 }}>&ldquo;The Case for &lsquo;Benevolent&rsquo; Mobile Apps&rdquo;</h1>
+          <div style={{ fontSize: 14, color: "rgba(255,255,255,0.75)" }}>Urban &amp; Sultan — MIT Sloan Management Review, Winter 2015, Vol. 56, No. 2</div>
+          <div style={{ display: "inline-block", marginTop: 14, background: "rgba(255,255,255,0.14)", fontSize: 10.5, fontWeight: 700, letterSpacing: 1.3, textTransform: "uppercase", padding: "5px 16px", borderRadius: 20, color: "rgba(255,255,255,0.88)" }}>MKTG 6200 — Professor Fareena Sultan (Co-Author)</div>
+        </div>
+
+        {/* TOC */}
+        <Card>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.2, textTransform: "uppercase", color: "#8E8574", marginBottom: 12 }}>{t("Guide Structure", "章節架構")}</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5px 24px" }}>
+            {[
+              ["A", colors.navy, "Opening Scripts", "開場腳本"],
+              ["B", colors.green, "Core Argument", "核心論點"],
+              ["C", colors.purple, "Article Logic Flow", "文章邏輯流程"],
+              ["D", colors.gold, "Benevolence Spectrum", "善意光譜"],
+              ["E", colors.navy, "Two Empirical Studies", "兩項實證研究"],
+              ["F", colors.gold, "Five Managerial Steps", "五大管理步驟"],
+              ["G", colors.purple, "Ready-to-Use Comments", "課堂短評論"],
+              ["H", colors.red, "Cold-Call Q&A", "問答準備"],
+              ["I", colors.purple, "K&K Connections", "教科書連結"],
+              ["J", colors.green, "Final Cheat Sheet", "最終速記"],
+            ].map(([l, bg, en, zh]) => (
+              <div key={l} style={{ display: "flex", alignItems: "center", gap: 10, padding: "4px 0", fontSize: 13 }}>
+                <span style={{ width: 22, height: 22, borderRadius: 6, background: bg, color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, flexShrink: 0 }}>{l}</span>
+                {t(en, zh)}
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* Alert */}
+        <div style={{ background: "#FFF9F0", border: "1px solid #EAD6B8", borderLeft: `4px solid ${colors.red}`, borderRadius: 12, padding: "20px 24px", marginBottom: 32, fontSize: 14, lineHeight: 1.78 }}>
+          <div style={{ color: colors.red, fontWeight: 700, fontSize: 12, textTransform: "uppercase", letterSpacing: 1, marginBottom: 10 }}>{t("Course Context", "課堂脈絡")}</div>
+          <div>{t(<><strong>Professor Sultan is a co-author.</strong> She knows every detail. Expect precise mastery of concepts, mechanisms, evidence, and managerial implications.</>, <><strong>Sultan 教授是本文共同作者。</strong>她對每個細節都有第一手了解。課堂期待你準確掌握概念、機制、證據與管理意涵。</>)}</div>
+          {[["g", "ARTICLE", "What the article explicitly states", "文章明確寫了什麼"],
+            ["a", "INFERENCE", "Reasonable managerial implication", "合理推出的管理意涵"],
+            ["p", "EXTENSION", 'Textbook — "The article shows X. From K&K, I\'d connect to Y."', '教科書延伸 —「文章顯示 X，從 K&K 角度我連結到 Y。」']
+          ].map(([type, label, en, zh]) => (
+            <div key={label} style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 7, fontSize: 13 }}>
+              <Tag type={type}>{label}</Tag> {t(en, zh)}
+            </div>
+          ))}
+        </div>
+
+        {/* A: Opening */}
+        <div style={{ marginBottom: 44 }}>
+          <SectionHead letter="A" bg={colors.navy} title={<div><div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1.3, textTransform: "uppercase", color: "#8E8574" }}>Section A</div><h2 style={{ fontSize: 18, fontWeight: 700 }}>{t("Opening Scripts", "開場腳本")}</h2></div>} />
+          <ScriptBox label="ENGLISH · 30–45 sec" color={colors.navy}>
+            <p>This article argues that mobile apps should not be viewed only as direct selling tools. Urban and Sultan propose that firms can build trust through &ldquo;benevolent&rdquo; apps — apps that help consumers solve problems or make decisions without focusing narrowly on an immediate sale. The key mechanism is trust: the authors say trust is built on competence, confidence, and benevolence, and that mobile apps are especially effective at signaling benevolence. They support this with two studies — Liberty Mutual in the U.S. and Suruga Bank in Japan — both showing that benevolent apps can improve trust, consideration, and preference. The main takeaway is that a mobile app should be part of a broader brand and trust strategy, not just a digital promotion tool.</p>
+          </ScriptBox>
+          <ScriptBox label="中文 · 30–45 秒" color={colors.green}>
+            <p>這篇文章主張 mobile apps 不應只被視為 direct selling tools。Urban 與 Sultan 提出企業可透過「benevolent apps」建立 trust——先幫消費者解決問題或做決策，而不是只盯著 immediate sale。核心機制是 trust，由 competence、confidence、benevolence 構成，mobile apps 特別適合傳達 benevolence。作者用美國 Liberty Mutual 與日本 Suruga Bank 兩個 studies 支持論點。最大 takeaway：mobile app 應是 brand strategy 和 trust strategy 的一部分。</p>
+          </ScriptBox>
+          <div style={{ height: 18 }} />
+          <ScriptBox label="ENGLISH · 60–90 sec" color={colors.navy}>
+            <p>What I found most important is that the article reframes mobile marketing from a transaction lens to a trust lens. The authors contrast push apps — designed to generate sales and promote deals — with benevolent apps, which help consumers in ways not directly tied to an immediate sale. Their argument is not that firms should stop selling. It is that if an app clearly advances the customer's interests, it strengthens the benevolence component of trust, which then improves consideration, preference, and willingness to buy.</p>
+            <p style={{ marginTop: 10 }}>The strongest example is Liberty Mutual. The company does not sell moving insurance, yet it developed an app to help people who were moving — a digital safe for recording valuables and a box inventory tool. The app still had a brand capture mechanism on the final screen linking users to agents, so it was not anti-commercial — it was customer value first, with a credible bridge back to the brand.</p>
+            <p style={{ marginTop: 10 }}>The article supports this with two studies using pre/post measurement and control conditions. In these forced-exposure settings, the benevolent apps produced stronger incremental effects than specific control media. But the authors do not claim apps replace other media — they say apps should be part of an optimized media mix. I would also note that the evidence mainly captures attitudes, consideration, preference, and purchase intent rather than long-run realized sales, so I see this as strong support for strategic value, not final proof.</p>
+          </ScriptBox>
+        </div>
+
+        <Dv />
+
+        {/* B: Core */}
+        <div style={{ marginBottom: 44 }}>
+          <SectionHead letter="B" bg={colors.green} title={<div><div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1.3, textTransform: "uppercase", color: "#8E8574" }}>Section B</div><h2 style={{ fontSize: 18, fontWeight: 700 }}>{t("Core Argument", "核心論點")}</h2></div>} />
+
+          <Card>
+            <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 12, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+              <Tag type="g">ARTICLE</Tag> {t("What is a Benevolent App?", "什麼是善意型 App？")} <Badge color={colors.red}>KEY DEFINITION</Badge>
+            </h3>
+            <p style={{ fontSize: 14, color: "#3E3828", lineHeight: 1.82 }}>
+              {t(
+                <>Apps whose value is <strong>not directly tied to selling products</strong>, but to <strong>advancing consumers' interests</strong> and advocating for their needs <strong>ahead of the company's short-term profit</strong>.</>,
+                <>善意型 App 的價值<strong>不直接綁在產品銷售上</strong>，而是<strong>推進消費者利益</strong>，把顧客需求放在公司短期獲利前面。</>
+              )}
+            </p>
+          </Card>
+
+          <Card>
+            <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}><Tag type="g">ARTICLE</Tag> Push Apps vs. Benevolent Apps</h3>
+            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+              <div style={{ flex: 1, minWidth: 220, background: "#FDF0F0", border: "1px solid #EABCBC", borderRadius: 12, padding: 18 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: colors.red, marginBottom: 6 }}>PUSH APPS</div>
+                <p style={{ fontSize: 13 }}>{t(<>Staples, Domino's, Zappos<br/>Goal: generate sales, promote deals<br/>Starting point: company's selling objective</>, <>Staples、Domino's、Zappos<br/>目標：促進銷售、推送優惠<br/>出發點：公司的銷售目標</>)}<br/><span style={{ color: "#6E5A18", fontSize: 11, fontWeight: 700 }}>→ Selling orientation</span></p>
+              </div>
+              <div style={{ flex: 1, minWidth: 220, background: "#EDF7F0", border: "1px solid #ACD8BC", borderRadius: 12, padding: 18 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: colors.green, marginBottom: 6 }}>BENEVOLENT APPS</div>
+                <p style={{ fontSize: 13 }}>{t(<>Sea Tow, North Face, Columbia<br/>Goal: help customers, build trust<br/>Starting point: customer's need/difficulty</>, <>Sea Tow、North Face、Columbia<br/>目標：幫助顧客、建立信任<br/>出發點：顧客的需求/困難</>)}<br/><span style={{ color: "#6E5A18", fontSize: 11, fontWeight: 700 }}>→ Customer orientation</span></p>
+              </div>
+            </div>
+          </Card>
+
+          <Card>
+            <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 12, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+              <Tag type="g">ARTICLE</Tag> {t("Core Mechanism: Trust", "核心機制：信任")} <Badge color={colors.red}>KEY MECHANISM</Badge>
+            </h3>
+            <p style={{ fontSize: 13, marginBottom: 16 }}>{t(<>Trust is built on three factors (Bart, Shankar, <strong>Sultan</strong> &amp; Urban, 2005 — <Tag type="r">Sultan's prior research</Tag>):</>, <>信任建立在三個因素上（Bart, Shankar, <strong>Sultan</strong> &amp; Urban, 2005 — <Tag type="r">Sultan 教授的先前研究</Tag>）：</>)}</p>
+            <div style={{ display: "flex", gap: 14, flexWrap: "wrap", margin: "20px 0" }}>
+              {[
+                { icon: "🏆", name: "Competence", zh: "能力", desc: ["High-quality product/service", "提供高品質產品/服務"], color: colors.navy },
+                { icon: "🤝", name: "Confidence", zh: "信心", desc: ["Customers believe the company", "顧客相信公司會負責"], color: colors.gold },
+                { icon: "💚", name: "Benevolence", zh: "善意", desc: ["Provider has customer's interests in mind", "企業把顧客利益放心上"], color: colors.green },
+              ].map(f => (
+                <div key={f.name} style={{ flex: 1, minWidth: 170, background: "#F3EEE6", border: "1px solid #DDD8CE", borderTop: `4px solid ${f.color}`, borderRadius: 12, padding: "22px 16px", textAlign: "center" }}>
+                  <div style={{ fontSize: 28 }}>{f.icon}</div>
+                  <h4 style={{ fontSize: 14, fontWeight: 700, color: f.color, margin: "8px 0 6px" }}>{f.name}{lang !== "en" && <><br/><span style={{ fontSize: 13, color: "#625A4A" }}>{f.zh}</span></>}</h4>
+                  <p style={{ fontSize: 12, color: "#625A4A" }}>{t(f.desc[0], f.desc[1])}</p>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: 14 }}>{t(<>Key claim: <strong>mobile apps are especially effective at signaling benevolence</strong>.</>, <>關鍵主張：<strong>mobile apps 特別適合傳達 benevolence</strong>。</>)}</p>
+            <Callout type="w">{t(<>Trust must be sustained by <strong>quality service</strong> and <strong>transparent communication</strong>. Cannot compensate for weak products indefinitely.</>, <>信任須由<strong>品質服務</strong>與<strong>透明溝通</strong>持續強化。無法永遠替弱產品擦屁股。</>)}</Callout>
+          </Card>
+
+          <Card style={{ borderLeft: `5px solid ${colors.gold}` }}>
+            <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}><Tag type="g">ARTICLE</Tag> Sea Tow — {t("Anchor Example", "錨定案例")}</h3>
+            <p><strong>Sea Tow Service International</strong> (Southold, NY) — {t("boater emergency towing & rescue.", "提供船主緊急拖吊與救援服務。")}</p>
+            <p style={{ marginTop: 8 }}><strong>{t("Free App:", "免費 App：")}</strong> {t("tide tables · marine weather · GPS · speed", "潮汐表、海洋天氣、GPS 座標、速度")}</p>
+            <p style={{ marginTop: 8 }}>{t(<><strong>Counterintuitive:</strong> Safety info might reduce accidents = less demand? Article argues opposite — consumers sense benevolence → more trust → choose Sea Tow in emergencies.</>, <><strong>反直覺：</strong>安全資訊降低事故＝削弱需求？文章反論——消費者感受善意 → 更信任 → 緊急時選 Sea Tow。</>)}</p>
+            <p style={{ marginTop: 8 }}>{t(<>App retains <strong>emergency help slider</strong> → customer welfare first, commercial relevance in background. <strong>Not anti-commercial.</strong></>, <>App 保留 <strong>emergency help slider</strong> → 先 customer welfare，再保留商業連結。<strong>並非反商業。</strong></>)}</p>
+          </Card>
+        </div>
+
+        <Dv />
+
+        {/* C: Logic Flow */}
+        <div style={{ marginBottom: 44 }}>
+          <SectionHead letter="C" bg={colors.purple} title={<div><div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1.3, textTransform: "uppercase", color: "#8E8574" }}>Section C</div><h2 style={{ fontSize: 18, fontWeight: 700 }}>{t("Article Logic Flow", "文章邏輯流程")}</h2></div>} />
+          <Card style={{ textAlign: "center", padding: "32px 22px" }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: "#8E8574", letterSpacing: 1.2, textTransform: "uppercase", marginBottom: 22 }}>{t("Causal Path — The Article's Core Argument", "因果路徑 — 文章核心論證")}</div>
+            {[[
+              { text: "Benevolent App", sub: t("Helps, not sells", "幫助而非銷售"), bg: "#EDE4F6", color: colors.purple, border: "#D4C4EE" },
+              { text: t("Signals Benevolence", "傳達善意"), bg: "#EDE4F6", color: colors.purple, border: "#D4C4EE" },
+              { text: "Trust ↑", sub: t("Trust rises", "信任提升"), bg: "#DCE8F4", color: colors.navy, border: "#ACC4DC" },
+            ], [
+              { text: "Trust ↑", bg: "#DCE8F4", color: colors.navy, border: "#ACC4DC" },
+              { text: "Consideration ↑", sub: t("Brand considered", "品牌考慮"), bg: "#E4F2E8", color: colors.green, border: "#AAD6BC" },
+              { text: "Preference ↑", sub: t("Brand preferred", "品牌偏好"), bg: "#E4F2E8", color: colors.green, border: "#AAD6BC" },
+              { text: "Purchase Intent ↑", sub: t("Willingness to buy", "購買意圖"), bg: "#FFF4DA", color: "#7A5A08", border: "#E4D29C" },
+            ]].map((row, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
+                {row.map((node, j) => (
+                  <div key={j} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    {j > 0 && <span style={{ color: "#8E8574", fontSize: 18 }}>→</span>}
+                    <div style={{ padding: "12px 18px", borderRadius: 10, fontSize: 12.5, fontWeight: 600, background: node.bg, color: node.color, border: `1px solid ${node.border}`, display: "flex", flexDirection: "column", alignItems: "center", gap: 2, minWidth: 100 }}>
+                      {node.text}
+                      {node.sub && <small style={{ fontSize: 10, fontWeight: 400, opacity: 0.65 }}>{node.sub}</small>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+            <div style={{ fontSize: 11, color: "#8E8574", marginTop: 16, fontStyle: "italic", lineHeight: 1.6 }}>
+              {t("Evidence mainly captures attitudes/intent, not long-run realized sales.", "文章 evidence 主要停留在態度與意向層面，而非長期已實現銷售。")}
+            </div>
+          </Card>
+        </div>
+
+        <Dv />
+
+        {/* D: Spectrum */}
+        <div style={{ marginBottom: 44 }}>
+          <SectionHead letter="D" bg={colors.gold} title={<div><div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1.3, textTransform: "uppercase", color: "#8E8574" }}>Section D</div><h2 style={{ fontSize: 18, fontWeight: 700 }}>{t("Benevolence Spectrum", "善意光譜")}</h2></div>} />
+          <div style={{ display: "flex", borderRadius: 12, overflow: "hidden", margin: "18px 0", fontWeight: 600, textAlign: "center", border: "1px solid #DDD8CE" }}>
+            {spectrumData.map((s, i) => (
+              <div key={i} style={{ padding: "18px 8px", flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 6, background: s.bg, color: s.color, fontSize: 12 }}>
+                {s.dir && <div style={{ fontSize: 9, opacity: 0.6, letterSpacing: 0.6, fontWeight: 700 }}>{s.dir}</div>}
+                <strong>{s.label}</strong>
+                {lang !== "en" && <div style={{ fontSize: 10, opacity: 0.7 }}>{s.zh}</div>}
+                <div style={{ fontSize: 10.5, opacity: 0.8, lineHeight: 1.5, fontWeight: 500 }}>{s.ex}</div>
+                {s.dir2 && <div style={{ fontSize: 9, opacity: 0.6, letterSpacing: 0.6, fontWeight: 700 }}>{s.dir2}</div>}
+              </div>
+            ))}
+          </div>
+          <Callout type="i">{t(<>Not binary. Managers have <strong>strategic flexibility</strong>. Trust strategy → far right. Promo → evolve left to right.</>, <>非二元。Manager 有<strong>策略彈性</strong>。信任策略 → 最右端。促銷導向 → 從左往右演進。</>)}</Callout>
+          <Callout type="w"><span style={{ fontSize: 12 }}>{t(<>Nationwide discussed in text but <strong>not plotted on the spectrum figure</strong>.</>, <>Nationwide 在正文討論但<strong>未出現在光譜圖上</strong>。</>)}</span></Callout>
+        </div>
+
+        <Dv />
+
+        {/* E: Studies */}
+        <div style={{ marginBottom: 44 }}>
+          <SectionHead letter="E" bg={colors.navy} title={<div><div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1.3, textTransform: "uppercase", color: "#8E8574" }}>Section E</div><h2 style={{ fontSize: 18, fontWeight: 700 }}>{t("Two Empirical Studies", "兩項實證研究")}</h2></div>} />
+
+          <Card style={{ borderLeft: `5px solid ${colors.navy}` }}>
+            <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 12, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>Study #1: Liberty Mutual — "Dubble Wrap" <Badge color={colors.navy}>BEST EXAMPLE</Badge></h3>
+            <p><strong>Company:</strong> Liberty Mutual, Boston | <strong>Target:</strong> {t("People moving", "搬家中的人")} | <strong>Features:</strong> Digital safe + Box inventory</p>
+            <Callout type="g">{t(<><strong>Key Insight:</strong> Sells auto/homeowners/property insurance — <strong>does NOT sell moving insurance</strong>. Purest benevolence.</>, <><strong>關鍵洞見：</strong>賣汽車/房屋/財產保險——<strong>不賣搬家保險</strong>。最純粹的善意展示。</>)}</Callout>
+            <p style={{ fontSize: 13 }}>{t(<><strong>Goodwill-capture:</strong> Final screen links to agents. Items catalogued → simplifies application. <strong>Customer value first + credible bridge.</strong></>, <><strong>善意轉化：</strong>最後一頁連結 agents。物品已編目 → 簡化申請。<strong>先 customer value，再 credible bridge。</strong></>)}</p>
+            <p style={{ fontSize: 12, color: "#8E8574", marginTop: 8 }}><strong>Design:</strong> 2010 · 750 iPhone · 550 app | 100 website ctrl | 100 TV ctrl · Pre/post</p>
+            <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: 0, fontSize: 13, margin: "14px 0", borderRadius: 10, overflow: "hidden", border: "1px solid #DDD8CE" }}>
+              <thead><tr>{["Metric", "Before", "After", "Change"].map(h => <th key={h} style={{ background: "#F3EEE6", color: colors.navy, fontWeight: 700, padding: "12px 16px", textAlign: "left", fontSize: 12 }}>{h}</th>)}</tr></thead>
+              <tbody>
+                {[["Consideration (1-10)", "5.4", "6.7", "+24%"],
+                  ["Purchase likelihood (1-5)", "2.9", "3.3", "+14%"],
+                ].map(([m, b, a, c], i) => (
+                  <tr key={i}><td style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE" }}>{m}</td><td style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE" }}>{b}</td><td style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE" }}>{a}</td><td style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE", color: colors.green, fontWeight: 700, fontSize: 14 }}>{c}</td></tr>
+                ))}
+                <tr><td style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE" }}>Combined sales potential</td><td colSpan={2} style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE", textAlign: "center" }}>1.24 × 1.14</td><td style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE", color: colors.green, fontWeight: 700, fontSize: 14 }}>= 1.41 → +41%</td></tr>
+                <tr><td style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE" }}>Preference (100-pt)</td><td style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE" }}>9.2%</td><td style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE" }}>17%</td><td style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE", color: colors.green, fontWeight: 700, fontSize: 14 }}>≈ 2×</td></tr>
+                <tr><td style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE" }}>vs. TV/website</td><td colSpan={3} style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE", color: "#6E5A18", fontWeight: 700 }}>+60% consideration · +34% preference (forced-exposure)</td></tr>
+              </tbody>
+            </table>
+          </Card>
+
+          <Card style={{ borderLeft: `5px solid ${colors.green}` }}>
+            <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 12 }}>Study #2: Suruga Bank — {t("Housing/Financial App", "住宅/財務規劃 App")}</h3>
+            <p><strong>Company:</strong> Suruga Bank, Shizuoka, Japan | <strong>Features:</strong> {t("Home selection + budget advisor + loan info", "住宅選擇 + 預算顧問 + 貸款資訊")}</p>
+            <Callout type="w"><span style={{ fontSize: 12 }}>{t(<><strong>App name varies:</strong> "Dream Mover" vs "Dream Move." Safest: <strong>"Suruga Bank's housing and financial-planning app."</strong></>, <><strong>App 名稱不一致：</strong>正文 "Dream Mover"，研究框 "Dream Move"。最穩：<strong>「駿河銀行的住宅及財務規劃 App」。</strong></>)}</span></Callout>
+            <p style={{ fontSize: 12, color: "#8E8574" }}><strong>Design:</strong> 2013 · 1,500 · 500 app | 500 article ctrl | 500 ad ctrl · Pre/post</p>
+            <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: 0, fontSize: 13, margin: "14px 0", borderRadius: 10, overflow: "hidden", border: "1px solid #DDD8CE" }}>
+              <thead><tr><th style={{ background: "#F3EEE6", color: colors.navy, fontWeight: 700, padding: "12px 16px", textAlign: "left", fontSize: 12 }}>Metric</th><th style={{ background: "#F3EEE6", color: colors.navy, fontWeight: 700, padding: "12px 16px", textAlign: "left", fontSize: 12 }}>Result</th></tr></thead>
+              <tbody>
+                {[
+                  [te("Trust attributes", "信任屬性"), <span style={{ color: colors.green, fontWeight: 700 }}>{te("All sig. improved (p < .01)", "全部顯著改善 (p < .01)")}</span>],
+                  ["Consideration", <span style={{ color: colors.green, fontWeight: 700, fontSize: 14 }}>4.34 → 14.16 = 2.26×</span>],
+                  ["Preference (100-pt)", <span style={{ color: colors.green, fontWeight: 700, fontSize: 14 }}>0.99 → 3.04 = 3×</span>],
+                  ["vs. print ad", <span style={{ color: "#6E5A18", fontWeight: 700 }}>&gt;2× {te("effective (forced-exposure)", "有效（forced-exposure）")}</span>],
+                ].map(([m, r], i) => (
+                  <tr key={i}><td style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE" }}>{m}</td><td style={{ padding: "12px 16px", borderTop: "1px solid #DDD8CE" }}>{r}</td></tr>
+                ))}
+              </tbody>
+            </table>
+            <p style={{ fontSize: 12, color: "#8E8574" }}>{t(<><strong>Cross-cultural:</strong> U.S. + Japan both positive → diverse cultural contexts → global brands.</>, <><strong>跨文化：</strong>美日均正面 → 多元文化適用 → 全球品牌。</>)}</p>
+          </Card>
+
+          <div style={{ fontSize: 15, fontWeight: 700, margin: "24px 0 12px" }}>{t("Key Numbers at a Glance", "關鍵數字速查")} <Badge color={colors.red}>MEMORIZE</Badge></div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+            {[
+              ["+24%", colors.navy, "LM Consider.", "5.4→6.7"],
+              ["+41%", colors.green, "LM Sales Pot.", "1.24×1.14"],
+              ["2.26×", colors.gold, "Suruga Cons.", "4.34→14.16"],
+              ["3×", colors.purple, "Suruga Pref.", "0.99→3.04"],
+            ].map(([v, c, l1, l2]) => (
+              <div key={l1} style={{ background: "#fff", border: "2px solid #DDD8CE", borderRadius: 14, padding: "22px 12px", textAlign: "center" }}>
+                <div style={{ fontSize: 28, fontWeight: 800, color: c, lineHeight: 1.15 }}>{v}</div>
+                <div style={{ fontSize: 11, color: "#625A4A", marginTop: 6, fontWeight: 500 }}>{l1}<br/>{l2}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <Dv />
+
+        {/* F: Steps */}
+        <div style={{ marginBottom: 44 }}>
+          <SectionHead letter="F" bg={colors.gold} title={<div><div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1.3, textTransform: "uppercase", color: "#8E8574" }}>Section F</div><h2 style={{ fontSize: 18, fontWeight: 700 }}>{t("Five Managerial Steps", "五大管理步驟")}</h2></div>} />
+          <Callout type="i">{t(<>Sultan emphasizes <strong>action orientation</strong>. These are the article's direct prescriptions.</>, <>Sultan 教授重視 <strong>action orientation</strong>。以下是文章的直接管理建議。</>)}</Callout>
+          <Step n={1} title={t("Decide Benevolence Level", "決定善意程度")}>{t(<>What info do customers need? What service? How to simplify? Be unique, useful, tech-backed. <strong>Clear brand link</strong>. Trust → far right. Promo → left to right.</>, <>顧客需要什麼資訊？什麼服務？如何簡化？獨特、有用、有技術支撐。<strong>保留清楚品牌連結</strong>。信任策略 → 最右端。促銷 → 從左往右。</>)}</Step>
+          <Step n={2} title={t("Design Like a New Product", "像新產品一樣設計")}>{t(<>Not an IT task. <strong>Go/no-go steps</strong>, focus groups. LM: heavy vs. light → chose simpler. Suruga: 3 focus groups.</>, <>不是 IT 任務。<strong>Go/no-go 決策點</strong>、焦點座談。LM：完整版 vs. 精簡版 → 選精簡。駿河：3 場焦點座談。</>)}</Step>
+          <Step n={3} title={t("Test with Users", "與用戶測試")}>{t(<><strong>Flawless & relevant</strong> — glitches undermine trust. Know how app creates value + <strong>psychological brand link</strong>. May need 2.0.</>, <><strong>完美且相關</strong>——故障會傷害信任。了解 App 如何創造價值 + 建立<strong>品牌心理連結</strong>。可能需要 2.0。</>)}</Step>
+          <Step n={4} title={t("Launch with Marketing Support", "配合行銷支援上市")}>{t("= launching new product. Awareness not automatic. Dedicated budget. 1M+ apps → invisible without advertising.", "如同新產品上市。知名度不會自動產生。專門預算。百萬+ App → 無廣告則隱形。")}</Step>
+          <Step n={5} title={t("Link to Overall Media Strategy", "連結整體媒體策略")}>{t(<>Part of trust-building strategy. Article: <strong>"other media also important"</strong> → optimized mix. <span style={{ color: colors.red, fontWeight: 700 }}>Do NOT say "apps replace traditional media."</span></>, <>作為信任策略一部分。文章：<strong>「其他媒體也很重要」</strong> → 最佳化媒體組合。<span style={{ color: colors.red, fontWeight: 700 }}>不要說「App 取代傳統媒體」。</span></>)}</Step>
+        </div>
+
+        <Dv />
+
+        {/* G: Comments */}
+        <div style={{ marginBottom: 44 }}>
+          <SectionHead letter="G" bg={colors.purple} title={<div><div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1.3, textTransform: "uppercase", color: "#8E8574" }}>Section G</div><h2 style={{ fontSize: 18, fontWeight: 700 }}>{t("Ready-to-Use Comments", "課堂短評論")}</h2></div>} />
+          <Comment label="1 — Mechanism">{t(<>Gives a <strong>mechanism</strong>. Benevolence strengthens trust → brands must enter <strong>consideration set</strong>.</>, <>提供 <strong>mechanism</strong>。Benevolence 強化 trust → 品牌必須先進入 <strong>consideration set</strong>。</>)}</Comment>
+          <Comment label="2 — Still Strategic">{t(<><strong>Not anti-business.</strong> LM created a <strong>bridge</strong> to other products. Customer value first, not without business relevance.</>, <><strong>並非反商業。</strong>LM 為其他保險產品建立 <strong>bridge</strong>。先 customer value，但仍有商業關聯。</>)}</Comment>
+          <Comment label="3 — Spectrum">{t(<>Managers pick the <strong>right level</strong> for brand and competitive context. Not binary.</>, <>Manager 依品牌與競爭情境選擇<strong>適合的善意程度</strong>。非二元。</>)}</Comment>
+          <Comment label="4 — Qualification">{t(<>Strong evidence but mainly <strong>attitudes/intent</strong>. Strategic potential, not final proof of long-run sales.</>, <>Evidence 強但主要測<strong>態度/意向</strong>。是 strategic potential 的強支持，非長期 sales 的最終 proof。</>)}</Comment>
+          <Comment label={<>5 — Reframing <Tag type="p">EXTENSION</Tag></>} note={t("Your course extension, not article language.", "你的課程延伸，不是文章原話。")}>{t(<>Partly <strong>product design</strong> (utility), partly <strong>communication</strong> (trust), partly <strong>CRM</strong> (pre-sale relationship).</>, <>部分是<strong>產品設計</strong>（utility）、部分是<strong>溝通</strong>（信任）、部分是 <strong>CRM</strong>（售前關係）。</>)}</Comment>
+        </div>
+
+        <Dv />
+
+        {/* H: QA */}
+        <div style={{ marginBottom: 44 }}>
+          <SectionHead letter="H" bg={colors.red} title={<div><div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1.3, textTransform: "uppercase", color: "#8E8574" }}>Section H</div><h2 style={{ fontSize: 18, fontWeight: 700 }}>{t("Cold-Call Q&A", "問答準備")}</h2></div>} />
+          <QA n={1} q={t("What is a benevolent app?", "什麼是善意型 App？")} a={t("Value not tied to selling but to helping consumers — advancing their interests ahead of short-term profit.", "價值不綁在 selling 上，而是幫消費者做決策，consumer interests 優先。")} />
+          <QA n={2} q={t("How different from push app?", "和 push app 有何不同？")} a={t(<>Push = sales + deals. Benevolent = help first. <strong>Selling vs. customer orientation.</strong></>, <>Push = 銷售+促銷。Benevolent = 先幫顧客。<strong>Selling vs. customer orientation。</strong></>)} />
+          <QA n={3} q={t("Key mechanism?", "核心機制？")} a={t(<><strong>Trust</strong> = competence + confidence + benevolence. Apps signal benevolence → trust ↑ → consider/prefer/buy ↑.</>, <><strong>Trust</strong> = competence + confidence + benevolence。Apps 傳達 benevolence → trust ↑ → 考慮/偏好/購買 ↑。</>)} />
+          <QA n={4} q={t("Evidence?", "有何證據？")} a={t("Two studies, pre/post + controls. LM: +24% consider, +14% purchase, pref ≈2×. Suruga: 2.26× consider, 3× pref. Forced-exposure.", "兩項研究，前後測+控制組。LM：+24% 考慮、+14% 購買、偏好 ≈2×。駿河：考慮 2.26×、偏好 3×。Forced-exposure。")} />
+          <QA n={5} q={t("What should managers do?", "Manager 該怎麼做？")} a={t(<>5 steps: level → NPD design → test → launch w/ budget → media strategy. <strong>Not standalone.</strong></>, <>五步：善意程度 → NPD 設計 → 測試 → 行銷支援上市 → 媒體策略。<strong>非獨立策略。</strong></>)} />
+          <QA n={6} q={<>{t("Limitations?", "研究限制？")} <Tag type="a">CRITICAL THINKING</Tag></>} a={t(<>Forced-exposure; attitudes/intent not long-run sales. "Strong indications" not proof. Benevolence must be <strong>credible</strong>.</>, <>Forced-exposure；態度/意向而非長期 sales。「Strong indications」非最終 proof。Benevolence 必須<strong>可信</strong>。</>)} />
+          <QA n={7} q={t("Why Liberty Mutual strongest?", "為何 Liberty Mutual 最具代表性？")} a={t(<><strong>Doesn't sell moving insurance.</strong> Purest benevolence. Benefit = trust + downstream brand effects.</>, <><strong>不賣搬家保險。</strong>最純粹的善意展示。好處 = 信任 + 下游品牌效果。</>)} />
+          <QA n={8} q={t("Cross-cultural?", "跨文化適用？")} a={t(<>U.S. + Japan both positive. <strong>Diverse cultural contexts</strong> → global brands.</>, <>美日均正面。<strong>多元文化情境</strong> → 全球品牌適用。</>)} />
+        </div>
+
+        <Dv />
+
+        {/* I: Textbook */}
+        <div style={{ marginBottom: 44 }}>
+          <SectionHead letter="I" bg={colors.purple} title={<div><div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1.3, textTransform: "uppercase", color: "#8E8574" }}>Section I</div><h2 style={{ fontSize: 18, fontWeight: 700 }}>{t("Kotler & Keller Connections", "教科書連結")}</h2></div>} />
+          <Callout type="w"><span style={{ fontSize: 12 }}>{t(<><strong>Course extension, not article language.</strong> Frame: <em>"The article shows X. From K&K, I'd connect to Y."</em></>, <><strong>課程延伸，非文章原話。</strong>句型：<em>「文章顯示 X。從 K&K 角度，我連結到 Y。」</em></>)}</span></Callout>
+          <Card>
+            <TBRow ch="Ch.11" name="IMC / Media Mix" strength="Strong" desc={t("Step 5 explicitly discusses overall media spend.", "第五步明確討論整體媒體支出。")} />
+            <TBRow ch="Ch.10" name="NPD Process" strength="Strong" desc={t('Step 2: "design like new product, go/no-go."', "第二步：「像新產品設計，有 go/no-go。」")} />
+            <TBRow ch="Ch.5" name="Consumer Decision Journey" strength="Strong" desc={t("Studies measure consideration → preference → purchase intent.", "研究測量 consideration → preference → purchase intent。")} />
+            <TBRow ch="Ch.8" name="CBBE" strength="Extension" desc={t("Logic consistent but doesn't use Keller's terms.", "邏輯一致但未用 Keller 術語。")} />
+            <TBRow ch="Ch.4" name="CRM & Loyalty" strength="Extension" desc={t("Trust-building relates to loyalty.", "信任建立與忠誠度相關。")} />
+            <TBRow ch="Ch.7" name="Positioning" strength="Extension" desc={t("Benevolent app as differentiation.", "善意 App 作為差異化策略。")} isLast />
+          </Card>
+        </div>
+
+        <Dv />
+
+        {/* J: Cheat Sheet */}
+        <div style={{ marginBottom: 44 }}>
+          <SectionHead letter="J" bg={colors.green} title={<div><div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1.3, textTransform: "uppercase", color: "#8E8574" }}>Section J</div><h2 style={{ fontSize: 18, fontWeight: 700 }}>{t("Final Cheat Sheet", "最終速記")}</h2></div>} />
+          <div style={{ background: "#fff", border: `2px solid ${colors.navy}`, borderRadius: 16, padding: "28px 30px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5px 28px" }}>
+              {[
+                [t("Core Idea", "核心觀點"), t(<>Apps build <strong>trust</strong>, not just sales</>, <>App 建立<strong>信任</strong>，不只推銷</>)],
+                [t("Trust", "信任公式"), <strong>Competence + Confidence + Benevolence</strong>],
+                [t("Benevolent App", "善意 App"), t("Helps first; sells later if at all", "先幫助；之後才談銷售")],
+                [t("Spectrum", "光譜"), "Push → Conv → Ent → Assist → Benevolent"],
+                [t("Best Example", "最佳案例"), t(<><strong>Liberty Mutual</strong> — no moving insurance</>, <><strong>Liberty Mutual</strong> — 不賣搬家險</>)],
+                [t("Anchor", "錨定案例"), t(<><strong>Sea Tow</strong> — safety + emergency slider</>, <><strong>Sea Tow</strong> — 安全 + 緊急滑桿</>)],
+                ["Evidence", "LM (U.S. 750) + Suruga (JP 1500)"],
+                ["LM", "+24% consider · +14% buy · +41% combined · pref ≈2×"],
+                ["Suruga", "Consider 2.26× · Pref 3×"],
+                [t("Cross-Cultural", "跨文化"), t("U.S. + Japan → global brands", "美日 → 全球品牌")],
+                [t("5 Steps", "五步驟"), "Level → NPD → Test → Launch → Media mix"],
+                [t("Media", "媒體提醒"), t(<>NOT "replace" → optimized mix</>, <>不是「取代」→ 最佳化組合</>)],
+                [t("Critique", "批判"), t(<>Attitudes/intent not sales. "Strong indications."</>, <>態度/意向非 sales。「Strong indications」。</>)],
+                [t("Caveat", "提醒"), t("Must be credible. Can't fix weak products.", "必須可信。無法替弱產品擦屁股。")],
+              ].map(([k, v], i) => (
+                <div key={i} style={{ display: "flex", gap: 10, padding: "6px 0", fontSize: 13, lineHeight: 1.55, borderBottom: "1px dotted #DDD8CE" }}>
+                  <span style={{ color: colors.navy, fontWeight: 700, minWidth: 115, flexShrink: 0 }}>{k}</span>
+                  <span style={{ color: "#3E3828" }}>{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
